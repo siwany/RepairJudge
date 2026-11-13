@@ -270,14 +270,14 @@ def run_jobs(jobs, results, args):
 def parse_args():
     p = argparse.ArgumentParser(description="Judge GSM8K user-correction pairs")
     p.add_argument("--api-key-path", default="../api_key.json")
-    p.add_argument("--backend", choices=["local", "openrouter"], default="local",
-                   help="Default judge set: JUDGE_SETS[backend] in models.py (default: local)")
+    p.add_argument("--backend", choices=["local"], default="local",
+                   help="Default judge set: JUDGE_SETS[backend] in models.py (OpenRouter is not used)")
     p.add_argument("--pairs", default="../outputs/repair/pairs_filtered.json")
     p.add_argument("--matches-out", default="../outputs/repair/matches_dialogue.json")
     p.add_argument("--metrics-out", default="../outputs/repair/metrics_dialogue.json")
     p.add_argument("--max-tokens", type=int, default=1024*32)
     p.add_argument("--workers", type=int, default=2,
-                   help="Parallel requests (local: 1-4; OpenRouter: 20-50)")
+                   help="Parallel requests")
     p.add_argument("--save-interval", type=int, default=10)
     p.add_argument("--resume", action=argparse.BooleanOptionalAction, default=False)
     p.add_argument("--gold", action="store_true",
@@ -285,7 +285,7 @@ def parse_args():
     p.add_argument("--judges", nargs="*", default=None,
                    help="judge_name values from models.py (default: the five in JUDGE_SETS[--backend])")
     p.add_argument("--exclude-model", nargs="*", default=[],
-                   help="Model(s) to drop from the judge pool, e.g. the generator: gemma3:12b")
+                   help="Model(s) to drop from the judge pool, e.g. the generator: gpt-oss:120b")
     p.add_argument("--limit", type=int, default=None, help="Judge only the first N pairs")
     return p.parse_args()
 
